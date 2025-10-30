@@ -87,5 +87,34 @@ def webhook():
 
     return jsonify({"reply": reply})
 
+@app.route("/tools", methods=["POST"])
+def tools():
+    data = request.json
+    tool_name = data.get("toolName")  # Vapi šalje ovo
+    parameters = data.get("parameters", {})
+
+    if tool_name == "check_slots":
+        date = parameters.get("date", "2025-11-05")  # default ako nema
+        slots = check_slots(date)  # tvoja postojeća funkcija
+        return jsonify({
+            "success": True,
+            "result": f"Available times: {', '.join(slots)}"
+        })
+    elif tool_name == "book_appointment":
+        result = book_appointment(
+            parameters["name"],
+            parameters["phone"],
+            parameters["date"],
+            parameters["time"],
+            parameters["service"]
+        )
+        return jsonify({
+            "success": True,
+            "result": result
+        })
+    else:
+        return jsonify({"success": False, "error": "Unknown tool"}), 400
+
 if __name__ == "__main__":
+
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
