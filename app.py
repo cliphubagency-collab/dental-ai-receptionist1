@@ -12,7 +12,7 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 creds = Credentials.from_service_account_file(
-    "credentials.json",
+    "/opt/render/project/src/credentials.json",  # Render Secret Files putanja
     scopes=["https://www.googleapis.com/auth/calendar"]
 )
 calendar = build("calendar", "v3", credentials=creds)
@@ -118,3 +118,4 @@ def tools():
 if __name__ == "__main__":
 
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+
