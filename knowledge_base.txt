@@ -1,0 +1,5 @@
+Clinic: BrightSmile Dental
+Address: 123 Main St, Boston, MA
+Phone: (617) 555-0123
+Hours: Mon-Fri 8AM-5PM, Sat 9AM-1PM
+Services: Check-up ($120), Cleaning ($90), Emergency ($250)
