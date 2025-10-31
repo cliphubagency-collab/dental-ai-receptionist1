@@ -13,9 +13,12 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 
 # GOOGLE CREDENTIALS
 creds_json = os.getenv("GOOGLE_CREDENTIALS")
-creds = Credentials.from_service_account_info(json.loads(creds_json), scopes=["https://www.googleapis.com/auth/calendar"])
-calendar = build("calendar", "v3", credentials=creds)
-CALENDAR_ID = os.getenv("CALENDAR_ID")
+if not creds_json:
+    raise ValueError("GOOGLE_CREDENTIALS is missing! Add it in Render Environment.")
+creds = Credentials.from_service_account_info(
+    json.loads(creds_json),
+    scopes=["https://www.googleapis.com/auth/calendar"]
+)
 
 def check_slots(date):
     try:
@@ -49,3 +52,4 @@ def tools():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+
